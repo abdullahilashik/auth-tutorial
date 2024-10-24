@@ -34,13 +34,13 @@ const RegisterForm = () => {
 
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
     console.log(values);
-    // startTransition(()=>{
-    //   register(values)
-    //     .then(data => {
-    //       setError(data.error);
-    //       setSuccess(data.success);
-    //     });
-    // });
+    startTransition(()=>{
+      register(values)
+        .then(data => {
+          setError(data.error);
+          setSuccess(data.success);
+        });
+    });
   }
   return (
     <CardWrapper
