@@ -1,7 +1,9 @@
+"use server";
+
 import { prisma } from '@/lib/db';
 import { RegisterSchema } from '@/schemas';
 import * as z from 'zod';
-// import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt';
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
     const validated = RegisterSchema.safeParse(values);
@@ -22,13 +24,13 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
         return {error: 'Email already taken'}
     }
 
-    // const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     await prisma.user.create({
         data: {
             name,
             email,
-            password
+            password: hashedPassword
         }
     })
 
